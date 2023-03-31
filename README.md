@@ -35,14 +35,17 @@ gunicorn fastapi_db.main:app -c ./fastapi_db/deploy/gunicorn.py
 访问 [http://127.0.0.1:8000/docs]( http://127.0.0.1:8000/docs) 验证运行正常
 
 ### 启动 ningx
+一、把自定义配置文件`deploy/nginx.conf`链接到nginx默认配置文件所在的地址,  **ln要使用完整路径**
+
 ```bash
-# 把deploy/nginx.conf配置文件，链接到nginx默认的地址, linux下地址不同, ln要使用完整路径
 #linux    $(pwd)  获得当前目录
 sudo ln -s $(pwd)/fastapi_db/deploy/nginx.conf  /etc/nginx/nginx.conf
 #mac
 ln -s $(pwd)/fastapi_db/deploy/nginx.conf /opt/homebrew/etc/nginx/nginx.conf 
-
-nginx -t      #测试配置文件是否正确
+```
+二、测试配置文件是否正确，并运行nginx
+```bash
+nginx -t      
 nginx         
 ```
 deploy/nginx.conf 配置的监听端口是 80 访问 [ http://localhost/app/docs](http://localhost/app/docs) 验证nginx运行正常
