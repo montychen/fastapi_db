@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 from sqlalchemy.orm import Session
 from . import models, schemas
 
@@ -21,6 +21,7 @@ def create_book(db: Session, book: schemas.BooksBase):  # 增加书籍信息
     curBook = models.Books(
         bookname=book.bookname,
         prices=book.prices,
+        datetime=datetime.now(),
     )
     db.add(curBook)   # 数据库表Books的id字段的值，自动生成
     db.commit()

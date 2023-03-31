@@ -40,6 +40,7 @@ gunicorn fastapi_db.main:app -c ./fastapi_db/deploy/gunicorn.py
 ```bash
 #linux    $(pwd)  获得当前目录
 sudo ln -s $(pwd)/fastapi_db/deploy/nginx.conf  /etc/nginx/nginx.conf
+
 #mac
 ln -s $(pwd)/fastapi_db/deploy/nginx.conf /opt/homebrew/etc/nginx/nginx.conf 
 ```

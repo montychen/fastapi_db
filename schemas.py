@@ -4,6 +4,7 @@ models.py中是与表严格对应的, 而schemas则可以根据表模型来定�
 """
 from typing import Union
 from pydantic import BaseModel
+from datetime import datetime
 
 
 # 建立一个去掉id的类，用来新建数据时使用
@@ -14,6 +15,7 @@ class BooksBase(BaseModel):
 
 class Books(BooksBase):
     id: Union[int, None] = None
+    datetime: datetime
 
     class Config:  # 这是pydantic的配置，将orm_mode设为True，告诉pydantic，这是可以直接映射为对象关系模型的类
         orm_mode = True
