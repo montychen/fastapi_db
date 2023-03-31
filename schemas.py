@@ -8,12 +8,12 @@ from datetime import datetime
 
 
 # 建立一个去掉id的类，用来新建数据时使用
-class BooksBase(BaseModel):
+class BookBase(BaseModel):
     bookname: str
     prices: Union[int, None] = None
 
 
-class Books(BooksBase):
+class Book(BookBase):
     id: Union[int, None] = None
     datetime: datetime
 

@@ -6,8 +6,8 @@ from sqlalchemy import Column, Integer, String,DateTime  # type: ignore
 from .databases import Base
 
 
-class Books(Base):
-    __tablename__ = "books"
+class Book(Base):
+    __tablename__ = "book"
 
     id = Column(Integer, primary_key=True, index=True)
     bookname = Column(String(100), unique=True)

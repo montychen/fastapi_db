@@ -4,12 +4,12 @@ from . import models, schemas
 
 
 def get_books_by_name(db: Session, bookname: str):  # 根据书名查询，支持模糊查询
-    return db.query(models.Books).filter(models.Books.bookname.like(f"%{bookname}%")).all()
+    return db.query(models.Book).filter(models.Book.bookname.like(f"%{bookname}%")).all()
 
 
 def delete_book_by_Id(db: Session, bookId: int):  # 根据书的`ID`删除
-    db_book = db.query(models.Books).filter(
-        models.Books.id == bookId).one_or_none()
+    db_book = db.query(models.Book).filter(
+        models.Book.id == bookId).one_or_none()
     if db_book is None:
         return None
     db.delete(db_book)
@@ -17,8 +17,8 @@ def delete_book_by_Id(db: Session, bookId: int):  # 根据书的`ID`删除
     return True
 
 
-def create_book(db: Session, book: schemas.BooksBase):  # 增加书籍信息
-    curBook = models.Books(
+def create_book(db: Session, book: schemas.BookBase):  # 增加书籍信息
+    curBook = models.Book(
         bookname=book.bookname,
         prices=book.prices,
         datetime=datetime.now(),
@@ -29,9 +29,9 @@ def create_book(db: Session, book: schemas.BooksBase):  # 增加书籍信息
     return curBook
 
 
-def update_book_by_id(db: Session, bookId: int, book: schemas.BooksBase):  # 根据书的`ID`修改书籍信息
-    db_book = db.query(models.Books).filter(
-        models.Books.id == bookId).one_or_none()
+def update_book_by_id(db: Session, bookId: int, book: schemas.BookBase):  # 根据书的`ID`修改书籍信息
+    db_book = db.query(models.Book).filter(
+        models.Book.id == bookId).one_or_none()
     if db_book is None:
         return None
 
@@ -39,6 +39,7 @@ def update_book_by_id(db: Session, bookId: int, book: schemas.BooksBase):  # 根
     for var, value in vars(book).items():
         # python的函数setattr()，用于设置属性值，这里是更新书籍的信息
         setattr(db_book, var, value) if value else None
+    
     db.commit()
     db.refresh(db_book)
     return db_book

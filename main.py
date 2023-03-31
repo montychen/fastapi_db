@@ -23,7 +23,7 @@ def get_db():  # 设定数据库连接
         db.close()
 
 
-@app.get("/books/", response_model=list[schemas.Books])  # 查询书籍
+@app.get("/books/", response_model=list[schemas.Book])  # 查询书籍
 def get_hospital_nums(bookname: str, db: Session = Depends(get_db)):
     db_books = crud.get_books_by_name(db, bookname=bookname)
     if not db_books:
@@ -36,13 +36,13 @@ def delete_book(bookid: int, db: Session = Depends(get_db)):
     return crud.delete_book_by_Id(db, bookId=bookid)
 
 
-@app.post("/updateBook/{bookid}", response_model=schemas.Books)  # 修改书籍
-def update_book(bookid: int, book: schemas.BooksBase, db: Session = Depends(get_db)):
+@app.post("/updateBook/{bookid}", response_model=schemas.Book)  # 修改书籍
+def update_book(bookid: int, book: schemas.BookBase, db: Session = Depends(get_db)):
     return crud.update_book_by_id(db, bookId=bookid, book=book)
 
 
-@app.post("/books/", response_model=schemas.Books)  # 新增书籍
-def create_book(book: schemas.BooksBase, db: Session = Depends(get_db)):
+@app.post("/books/", response_model=schemas.Book)  # 新增书籍
+def create_book(book: schemas.BookBase, db: Session = Depends(get_db)):
     db_book = crud.get_books_by_name(db, bookname=book.bookname)
     if db_book:
         raise HTTPException(status_code=400, detail="该书籍已经存在。")

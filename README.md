@@ -1,6 +1,7 @@
 # 系统要求
 - python >= 3.10 
 ```bash
+pip install fastapi
 pip install uvicorn[standard]
 ```
 # 开发环境 run 
