@@ -14,7 +14,7 @@ uvicorn fastapi_db.main:app --reload
 - nginx 默认配置文件 `nginx.conf` 路径
   - **`nginx -t`** 该命令会输出nginx的配置文件的路径和验证结果
   - mac m1后续， nginx默认配置文件地址是 `/opt/homebrew/etc/nginx/nginx.conf`
-  - linux 默认配置文件地址是 `   `
+  - linux 默认配置文件地址是 `/etc/nginx/nginx.conf`
    
 
 
@@ -36,8 +36,12 @@ gunicorn fastapi_db.main:app -c ./fastapi_db/deploy/gunicorn.py
 
 ### 启动 ningx
 ```bash
-# 把deplay/nginx.conf配置文件，链接到nginx默认的地址
-ln -s fastapi_db/deplay/nginx.conf /opt/homebrew/etc/nginx/nginx.conf 
+# 把deploy/nginx.conf配置文件，链接到nginx默认的地址, linux下地址不同, ln要使用完整路径
+#linux    $(pwd)  获得当前目录
+sudo ln -s $(pwd)/fastapi_db/deploy/nginx.conf  /etc/nginx/nginx.conf
+#mac
+ln -s $(pwd)/fastapi_db/deploy/nginx.conf /opt/homebrew/etc/nginx/nginx.conf 
+
 nginx -t      #测试配置文件是否正确
 nginx         
 ```
